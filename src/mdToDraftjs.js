@@ -40,7 +40,7 @@ const getBlockStyleForMd = (node, blockStyles) => {
     node.children[0].type === 'Image'
   ) {
     return 'atomic';
-  } else if (node.type === 'Paragraph' && node.raw && node.raw.match(/^\[\[\s\S+\s.*\S+\s\]\]/)) {
+  } else if (node.type === 'Paragraph' && node.raw && node.raw.match(/(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/)) {
     return 'atomic';
   }
   return blockStyles[style];
@@ -130,11 +130,11 @@ const parseMdLine = (line, existingEntities, extraStyles = {}) => {
     const string = child.raw;
 
     // RegEx: [[ embed url=<anything> ]]
-    const url = string.match(/^\[\[\s(?:embed)\s(?:url=(\S+))\s\]\]/)[1];
+    const url = string.match(/(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/)[0];
 
     const entityKey = Object.keys(entityMap).length;
     entityMap[entityKey] = {
-      type: 'draft-js-video-plugin-video',
+      type: 'EMBEDDED_LINK',
       mutability: 'IMMUTABLE',
       data: {
         src: url
@@ -149,7 +149,9 @@ const parseMdLine = (line, existingEntities, extraStyles = {}) => {
 
   const parseChildren = (child, style) => {
     // RegEx: [[ embed url=<anything> ]]
-    const videoShortcodeRegEx = /^\[\[\s(?:embed)\s(?:url=(\S+))\s\]\]/;
+    // const videoShortcodeRegEx = /^\[\[\s(?:embed)\s(?:url=(\S+))\s\]\]/;
+    const videoShortcodeRegEx = /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/;
+
     switch (child.type) {
       case 'Link':
         addLink(child);
@@ -186,7 +188,7 @@ const parseMdLine = (line, existingEntities, extraStyles = {}) => {
       }
       text = `${text}${
         child.type === 'Image' || videoShortcodeRegEx.test(child.raw) ? ' ' : child.value
-      }`;
+        }`;
     }
   };
 
