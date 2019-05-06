@@ -1,6 +1,6 @@
 'use strict';
 
-import { getId } from "./utils";
+import { getId } from './utils';
 
 const parse = require('@textlint/markdown-to-ast').parse;
 
@@ -200,7 +200,7 @@ const parseMdLine = (line, existingEntities, extraStyles = {}) => {
       }
       text = `${text}${
         child.type === 'Image' || videoShortcodeRegEx.test(child.raw) ? ' ' : child.value
-        }`;
+      }`;
     }
   };
 
@@ -227,7 +227,7 @@ const parseMdLine = (line, existingEntities, extraStyles = {}) => {
   };
 };
 
-export function mdToDraftjs(mdString, extraStyles) {
+function mdToDraftjs(mdString, extraStyles) {
   const paragraphs = splitMdBlocks(mdString);
   const blocks = [];
   let entityMap = {};
@@ -258,3 +258,5 @@ export function mdToDraftjs(mdString, extraStyles) {
     entityMap
   };
 }
+
+module.exports.mdToDraftjs = mdToDraftjs;

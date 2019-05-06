@@ -1,6 +1,6 @@
 'use strict';
 
-import { buildEmbeddedUrl } from "./utils";
+import { buildEmbeddedUrl } from './utils';
 
 const defaultMarkdownDict = {
   BOLD: '__',
@@ -107,7 +107,7 @@ function getInlineStyleRangesByLength(inlineStyleRanges) {
   return [...inlineStyleRanges].sort((a, b) => b.length - a.length);
 }
 
-export function draftjsToMd(raw, extraMarkdownDict) {
+function draftjsToMd(raw, extraMarkdownDict) {
   const markdownDict = { ...defaultMarkdownDict, ...extraMarkdownDict };
   let returnString = '';
   const appliedBlockStyles = [];
@@ -185,3 +185,5 @@ export function draftjsToMd(raw, extraMarkdownDict) {
   });
   return returnString;
 }
+
+module.exports.draftjsToMd = draftjsToMd;
