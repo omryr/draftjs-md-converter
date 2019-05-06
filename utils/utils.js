@@ -32,7 +32,8 @@ function getId(url, provider) {
 
 function buildEmbeddedUrl(string) {
   const provider = getEmbedProvider(string);
-  const userUrl = string.match(ytReg)[0];
+  const regExp = provider === 'youtube' ? ytReg : vimReg;
+  const userUrl = string.match(regExp)[0];
 
   const id = getId(userUrl, provider);
   return `${getEmbedProviderUrl(provider)}/${id}`;
