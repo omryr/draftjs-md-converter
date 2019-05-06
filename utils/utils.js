@@ -9,21 +9,23 @@ function getEmbedProviderUrl(provider) {
 
 function getEmbedProvider(string) {
   if (ytReg.test(string)) return 'youtube';
-  // return 'https://www.youtube.com/embed/'
   if (vimReg.test(string)) return 'vimeo';
-  // return 'https://player.vimeo.com/video/'
   return null;
 }
 
 function getId(url, provider) {
   const regExp = provider === 'youtube' ? ytReg : vimReg;
-  console.log('provider ', provider);
-  console.log('regRexp ', regExp);
-  // /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
   const match = url.match(regExp);
 
-  if (match && match[1].length === 11) {
-    return match[1];
+  if (provider === 'youtube') {
+    if (match && match[1].length === 11) {
+      return match[1];
+    }
+  }
+  if (provider === 'vimeo') {
+    if (match && match[4].length === 8) {
+      return match[4];
+    }
   }
   return 'error';
 }
