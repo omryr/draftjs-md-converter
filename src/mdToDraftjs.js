@@ -40,7 +40,13 @@ const getBlockStyleForMd = (node, blockStyles) => {
     node.children[0].type === 'Image'
   ) {
     return 'atomic';
-  } else if (node.type === 'Paragraph' && node.raw && node.raw.match(/(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/)) {
+  } else if (
+    node.type === 'Paragraph' &&
+    node.raw &&
+    node.raw.match(
+      /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/
+    )
+  ) {
     return 'atomic';
   }
   return blockStyles[style];
@@ -126,11 +132,25 @@ const parseMdLine = (line, existingEntities, extraStyles = {}) => {
     });
   };
 
+  function getId(url) {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+
+    if (match && match[2].length === 11) {
+      return match[2];
+    }
+    return 'error';
+  }
+
   const addVideo = child => {
     const string = child.raw;
 
     // RegEx: [[ embed url=<anything> ]]
-    const url = string.match(/(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/)[0];
+    const userUrl = string.match(
+      /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/
+    )[0];
+    const id = getId(userUrl);
+    const url = `https://www.youtube.com/embed/${id}`;
 
     const entityKey = Object.keys(entityMap).length;
     entityMap[entityKey] = {
@@ -188,7 +208,7 @@ const parseMdLine = (line, existingEntities, extraStyles = {}) => {
       }
       text = `${text}${
         child.type === 'Image' || videoShortcodeRegEx.test(child.raw) ? ' ' : child.value
-        }`;
+      }`;
     }
   };
 
