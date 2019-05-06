@@ -227,7 +227,7 @@ const parseMdLine = (line, existingEntities, extraStyles = {}) => {
   };
 };
 
-function mdToDraftjs(mdString, extraStyles) {
+export function mdToDraftjs(mdString, extraStyles) {
   const paragraphs = splitMdBlocks(mdString);
   const blocks = [];
   let entityMap = {};
@@ -258,5 +258,3 @@ function mdToDraftjs(mdString, extraStyles) {
     entityMap
   };
 }
-
-module.exports.mdToDraftjs = mdToDraftjs;

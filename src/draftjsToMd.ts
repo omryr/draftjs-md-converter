@@ -107,7 +107,7 @@ function getInlineStyleRangesByLength(inlineStyleRanges) {
   return [...inlineStyleRanges].sort((a, b) => b.length - a.length);
 }
 
-function draftjsToMd(raw, extraMarkdownDict) {
+export function draftjsToMd(raw, extraMarkdownDict) {
   const markdownDict = { ...defaultMarkdownDict, ...extraMarkdownDict };
   let returnString = '';
   const appliedBlockStyles = [];
@@ -185,5 +185,3 @@ function draftjsToMd(raw, extraMarkdownDict) {
   });
   return returnString;
 }
-
-module.exports.draftjsToMd = draftjsToMd;
