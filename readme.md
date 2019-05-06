@@ -2,16 +2,9 @@
 
 # Draft.js to Markdown to Draft.js converter
 
-Converts rich text content between Draft.js blocks and Markdown.
-
-## Reasoning and background
-
-This library exists because I needed a highly customisable rich text editor which posts to an external API in Markdown. [Draft.js](https://facebook.github.io/draft-js/) to the rescue! It provides the editor state but, alas, doesn't ship with any sort of conversion to or from markdown. So, I've written my own.
-
-## Installation
-
+Converts rich text content between Draft.js blocks and Markdown forked from draftjs-md-converter to support video embed from youtube and vimeo (at the moment).
 ```
-npm install draftjs-md-converter
+npm i draftjs-md-converter-support-video
 ```
 
 ## Support
@@ -31,7 +24,7 @@ The following block styles are supported:
 The following media types are supported:
 
 * images
-* videos (with draft-js-video-plugin, parsing can be done using remark-shortcodes)
+* videos (youtube and video embed urls)
 
 ## Usage
 

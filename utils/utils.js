@@ -1,5 +1,4 @@
 const vimReg = /(http|https)?:\/\/(www\.|player\.)?vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|video\/|)(\d+)(?:|\/\?)/;
-// const vimReg = /(http|https)?:\/\/(www\.|player\.)?vimeo\.com?\/:channels\/(?:\w+\/)?\/videos\/|video\/|(\d+)(?:|\/\?)/;
 const ytReg = /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/;
 
 function getEmbedProviderUrl(provider) {
