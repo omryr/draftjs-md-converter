@@ -1,6 +1,6 @@
 'use strict';
 
-import { buildEmbeddedUrl } from './utils';
+const utils = require('./utils/utils');
 
 const defaultMarkdownDict = {
   BOLD: '__',
@@ -52,7 +52,7 @@ const applyAtomicStyle = (block, entityMap, content) => {
   const type = entityMap[key].type;
   const data = entityMap[key].data;
   if (type === 'EMBEDDED_LINK') {
-    return `${strippedContent}[[ embed url=${buildEmbeddedUrl(data.url || data.src)} ]]`;
+    return `${strippedContent}[[ embed url=${utils.buildEmbeddedUrl(data.url || data.src)} ]]`;
   }
   return `${strippedContent}![${data.fileName || ''}](${data.url || data.src})`;
 };

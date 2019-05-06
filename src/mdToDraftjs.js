@@ -1,6 +1,5 @@
 'use strict';
-
-import { getId } from './utils';
+const utils = require('./utils/utils');
 
 const parse = require('@textlint/markdown-to-ast').parse;
 
@@ -141,7 +140,7 @@ const parseMdLine = (line, existingEntities, extraStyles = {}) => {
     const userUrl = string.match(
       /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/
     )[0];
-    const id = getId(userUrl);
+    const id = utils.getId(userUrl);
     const url = `https://www.youtube.com/embed/${id}`;
 
     const entityKey = Object.keys(entityMap).length;
