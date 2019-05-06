@@ -17,6 +17,8 @@ function getEmbedProvider(string) {
 
 function getId(url, provider) {
   const regExp = provider === 'youtube' ? ytReg : vimReg;
+  console.log('provider ', provider);
+  console.log('regRexp ', regExp);
   // /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
   const match = url.match(regExp);
 
