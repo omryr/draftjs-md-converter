@@ -1,5 +1,5 @@
 'use strict';
-const utils = require('./utils/utils');
+const utils = require('../utils/utils');
 
 const parse = require('@textlint/markdown-to-ast').parse;
 
