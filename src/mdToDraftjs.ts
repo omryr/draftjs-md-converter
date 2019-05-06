@@ -1,5 +1,7 @@
 'use strict';
 
+import { getId } from "./utils";
+
 const parse = require('@textlint/markdown-to-ast').parse;
 
 const defaultInlineStyles = {
@@ -132,16 +134,6 @@ const parseMdLine = (line, existingEntities, extraStyles = {}) => {
     });
   };
 
-  function getId(url) {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-    const match = url.match(regExp);
-
-    if (match && match[2].length === 11) {
-      return match[2];
-    }
-    return 'error';
-  }
-
   const addVideo = child => {
     const string = child.raw;
 
@@ -208,7 +200,7 @@ const parseMdLine = (line, existingEntities, extraStyles = {}) => {
       }
       text = `${text}${
         child.type === 'Image' || videoShortcodeRegEx.test(child.raw) ? ' ' : child.value
-      }`;
+        }`;
     }
   };
 
