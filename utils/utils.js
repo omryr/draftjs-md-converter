@@ -12,11 +12,18 @@ function buildEmbeddedUrl(string) {
   const userUrl = string.match(
     /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/
   )[0];
+
   const id = getId(userUrl);
   return `https://www.youtube.com/embed/${id}`;
 }
 
+function testEmbed(string) {
+  const reg = /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/;
+  return reg.test(string);
+}
+
 module.exports = {
   buildEmbeddedUrl,
-  getId
+  getId,
+  testEmbed
 };

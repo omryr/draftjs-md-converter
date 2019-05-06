@@ -136,14 +136,9 @@ const parseMdLine = (line, existingEntities, extraStyles = {}) => {
   const addVideo = child => {
     const string = child.raw;
 
-    // RegEx: [[ embed url=<anything> ]]
-    const userUrl = string.match(
-      /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/
-    )[0];
-    const id = utils.getId(userUrl);
-    const url = `https://www.youtube.com/embed/${id}`;
-
+    const url = utils.buildEmbeddedUrl(string);
     const entityKey = Object.keys(entityMap).length;
+
     entityMap[entityKey] = {
       type: 'EMBEDDED_LINK',
       mutability: 'IMMUTABLE',
@@ -159,9 +154,7 @@ const parseMdLine = (line, existingEntities, extraStyles = {}) => {
   };
 
   const parseChildren = (child, style) => {
-    // RegEx: [[ embed url=<anything> ]]
-    // const videoShortcodeRegEx = /^\[\[\s(?:embed)\s(?:url=(\S+))\s\]\]/;
-    const videoShortcodeRegEx = /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/;
+    // const videoShortcodeRegEx = /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/;
 
     switch (child.type) {
       case 'Link':
@@ -171,21 +164,21 @@ const parseMdLine = (line, existingEntities, extraStyles = {}) => {
         addImage(child);
         break;
       case 'Paragraph':
-        if (videoShortcodeRegEx.test(child.raw)) {
+        if (utils.testEmbed(child.raw)) {
           addVideo(child);
         }
         break;
       default:
     }
 
-    if (!videoShortcodeRegEx.test(child.raw) && child.children && style) {
+    if (!utils.testEmbed(child.raw) && child.children && style) {
       const rawLength = getRawLength(child.children);
       addInlineStyleRange(text.length, rawLength, style.type);
       const newStyle = inlineStyles[child.type];
       child.children.forEach(grandChild => {
         parseChildren(grandChild, newStyle);
       });
-    } else if (!videoShortcodeRegEx.test(child.raw) && child.children) {
+    } else if (!utils.testEmbed(child.raw) && child.children) {
       const newStyle = inlineStyles[child.type];
       child.children.forEach(grandChild => {
         parseChildren(grandChild, newStyle);
@@ -197,9 +190,7 @@ const parseMdLine = (line, existingEntities, extraStyles = {}) => {
       if (inlineStyles[child.type]) {
         addInlineStyleRange(text.length, child.value.length, inlineStyles[child.type].type);
       }
-      text = `${text}${
-        child.type === 'Image' || videoShortcodeRegEx.test(child.raw) ? ' ' : child.value
-      }`;
+      text = `${text}${child.type === 'Image' || utils.testEmbed(child.raw) ? ' ' : child.value}`;
     }
   };
 
