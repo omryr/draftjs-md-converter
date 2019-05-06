@@ -24,7 +24,7 @@ The following block styles are supported:
 The following media types are supported:
 
 * images
-* videos (youtube and video embed urls)
+* videos (youtube and vimeo embed urls)
 
 ## Usage
 
