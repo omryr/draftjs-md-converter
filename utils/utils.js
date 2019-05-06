@@ -40,8 +40,10 @@ function buildEmbeddedUrl(string) {
 }
 
 function testEmbed(string) {
-  const reg = ytReg;
-  return reg.test(string);
+  const provider = getEmbedProvider(string);
+  const regExp = provider === 'youtube' ? ytReg : vimReg;
+
+  return regExp.test(string);
 }
 
 module.exports = {

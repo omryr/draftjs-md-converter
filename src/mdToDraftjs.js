@@ -41,13 +41,7 @@ const getBlockStyleForMd = (node, blockStyles) => {
     node.children[0].type === 'Image'
   ) {
     return 'atomic';
-  } else if (
-    node.type === 'Paragraph' &&
-    node.raw &&
-    node.raw.match(
-      /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/
-    )
-  ) {
+  } else if (node.type === 'Paragraph' && node.raw && utils.testEmbed(node.raw)) {
     return 'atomic';
   }
   return blockStyles[style];
@@ -154,8 +148,6 @@ const parseMdLine = (line, existingEntities, extraStyles = {}) => {
   };
 
   const parseChildren = (child, style) => {
-    // const videoShortcodeRegEx = /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/;
-
     switch (child.type) {
       case 'Link':
         addLink(child);
