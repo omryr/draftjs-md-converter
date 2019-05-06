@@ -42,6 +42,24 @@ const applyWrappingBlockStyle = (currentStyle, content) => {
   return content;
 };
 
+function getId(url) {
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+  const match = url.match(regExp);
+
+  if (match && match[2].length === 11) {
+    return match[2];
+  }
+  return 'error';
+}
+
+function buildEmbeddedUrl(string) {
+  const userUrl = string.match(
+    /(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?/
+  )[0];
+  const id = getId(userUrl);
+  return `https://www.youtube.com/embed/${id}`;
+}
+
 const applyAtomicStyle = (block, entityMap, content) => {
   if (block.type !== 'atomic') return content;
   // strip the test that was added in the media block
@@ -50,7 +68,7 @@ const applyAtomicStyle = (block, entityMap, content) => {
   const type = entityMap[key].type;
   const data = entityMap[key].data;
   if (type === 'EMBEDDED_LINK') {
-    return `${strippedContent}[[ embed url=${data.url || data.src} ]]`;
+    return `${strippedContent}[[ embed url=${buildEmbeddedUrl(data.url || data.src)} ]]`;
   }
   return `${strippedContent}![${data.fileName || ''}](${data.url || data.src})`;
 };
