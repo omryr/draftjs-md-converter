@@ -23,7 +23,7 @@ function getId(url, provider) {
     }
   }
   if (provider === 'vimeo') {
-    if (match && match[4].length === 8) {
+    if (match && match[4]) {
       return match[4];
     }
   }
