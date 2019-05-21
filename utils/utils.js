@@ -51,3 +51,5 @@ module.exports = {
   getId,
   testEmbed
 };
+
+module.exports.buildEmbeddedUrl = buildEmbeddedUrl;
