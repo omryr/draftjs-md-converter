@@ -48,6 +48,7 @@ function testEmbed(string) {
 
 module.exports = {
   buildEmbeddedUrl,
+  getEmbedProvider,
   getId,
   testEmbed
 };
