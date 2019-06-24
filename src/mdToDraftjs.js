@@ -243,3 +243,5 @@ function mdToDraftjs(mdString, extraStyles) {
 
 module.exports.mdToDraftjs = mdToDraftjs;
 module.exports.buildEmbeddedUrl = utils.buildEmbeddedUrl;
+module.exports.getId = utils.getId;
+module.exports.getEmbedProvider = utils.getEmbedProvider;
