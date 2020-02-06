@@ -108,7 +108,7 @@ function getInlineStyleRangesByLength(inlineStyleRanges) {
 }
 
 function draftjsToMd(raw, extraMarkdownDict) {
-  const markdownDict = { ...defaultMarkdownDict, ...extraMarkdownDict };
+  const markdownDict = Object.assign(defaultMarkdownDict, extraMarkdownDict);
   let returnString = '';
   const appliedBlockStyles = [];
 

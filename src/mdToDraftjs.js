@@ -79,8 +79,8 @@ const splitMdBlocks = md => {
 };
 
 const parseMdLine = (line, existingEntities, extraStyles = {}) => {
-  const inlineStyles = { ...defaultInlineStyles, ...extraStyles.inlineStyles };
-  const blockStyles = { ...defaultBlockStyles, ...extraStyles.blockStyles };
+  const inlineStyles = Object.assign(defaultInlineStyles, extraStyles.inlineStyles || {});
+  const blockStyles = Object.assign(defaultBlockStyles, extraStyles.blockStyles || {});
 
   const astString = parse(line);
   let text = '';
