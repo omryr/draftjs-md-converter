@@ -78,9 +78,16 @@ const splitMdBlocks = md => {
   return splitMdWithCodeBlocks;
 };
 
+function mergeObj2(obj1, obj2) {
+  var obj3 = {};
+  for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
+  for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
+  return obj3;
+}
+
 const parseMdLine = (line, existingEntities, extraStyles = {}) => {
-  const inlineStyles = Object.assign(defaultInlineStyles, extraStyles.inlineStyles || {});
-  const blockStyles = Object.assign(defaultBlockStyles, extraStyles.blockStyles || {});
+  const inlineStyles = mergeObj2(defaultInlineStyles, extraStyles.inlineStyles);
+  const blockStyles = mergeObj2(defaultBlockStyles, extraStyles.blockStyles);
 
   const astString = parse(line);
   let text = '';
