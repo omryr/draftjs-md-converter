@@ -104,7 +104,7 @@ function fixWhitespacesInsideStyle(text, style) {
 }
 
 function getInlineStyleRangesByLength(inlineStyleRanges) {
-  return [...inlineStyleRanges].sort((a, b) => b.length - a.length);
+  return [[].concat.apply([], inlineStyleRanges)].sort((a, b) => b.length - a.length);
 }
 
 function draftjsToMd(raw, extraMarkdownDict) {
