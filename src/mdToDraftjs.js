@@ -55,11 +55,11 @@ const joinCodeBlocks = splitMd => {
     const codeBlock = splitMd.slice(opening, closing + 1);
     const codeBlockJoined = codeBlock.join('\n');
     const updatedSplitMarkdown = [
-      // [].concat.apply([], splitMd).slice(0, opening),
-      ...splitMd.slice(0, opening),
+      [].concat.apply([], splitMd).slice(0, opening),
+      // ...splitMd.slice(0, opening),
       codeBlockJoined,
-      ...splitMd.slice(closing + 1)
-      // [].concat.apply([], splitMd).slice(0, closing + 1)
+      // ...splitMd.slice(closing + 1)
+      [].concat.apply([], splitMd).slice(0, closing + 1)
     ];
 
     return joinCodeBlocks(updatedSplitMarkdown);
