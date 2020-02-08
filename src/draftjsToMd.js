@@ -104,7 +104,9 @@ function fixWhitespacesInsideStyle(text, style) {
 }
 
 function getInlineStyleRangesByLength(inlineStyleRanges) {
-  return [[].concat.apply([], inlineStyleRanges)].sort((a, b) => b.length - a.length);
+  const concatArray = [[].concat.apply([], inlineStyleRanges)];
+  const response = concatArray.sort((a, b) => b.length - a.length);
+  return response;
 }
 
 // function mergeObj(obj1, obj2) {

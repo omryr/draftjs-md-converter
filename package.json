@@ -1,6 +1,6 @@
 {
   "name": "draftjs-md-converter-support-video",
-  "version": "1.0.36",
+  "version": "1.0.37",
   "description": "Converter for converting Draft.js state into Markdown and vice versa",
   "main": "dist/index.js",
   "license": "MIT",
