@@ -107,15 +107,15 @@ function getInlineStyleRangesByLength(inlineStyleRanges) {
   return [[].concat.apply([], inlineStyleRanges)].sort((a, b) => b.length - a.length);
 }
 
-function mergeObj(obj1, obj2) {
-  var obj3 = {};
-  for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
-  for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
-  return obj3;
-}
+// function mergeObj(obj1, obj2) {
+//   var obj3 = {};
+//   for (var attrname in obj1) { obj3[attrname] = obj1[attrname]; }
+//   for (var attrname in obj2) { obj3[attrname] = obj2[attrname]; }
+//   return obj3;
+// }
 
 function draftjsToMd(raw, extraMarkdownDict) {
-  const markdownDict = mergeObj(defaultMarkdownDict, extraMarkdownDict);
+  const markdownDict = { ...defaultMarkdownDict, ...extraMarkdownDict };
   let returnString = '';
   const appliedBlockStyles = [];
 
