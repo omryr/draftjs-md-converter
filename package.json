@@ -41,8 +41,7 @@
   },
   "homepage": "https://github.com/omryr/draftjs-md-converter#readme",
   "devDependencies": {
-    "babel": "^6.5.2",
-    "babel-cli": "^6.7.5",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.7.6",
     "babel-eslint": "^6.1.2",
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
